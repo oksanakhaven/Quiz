@@ -6,18 +6,6 @@ const retakingButton = document.querySelector(".retaking");
 
 let points = 0;
 
-// // ... - spread operator - add all elements to the list
-// const array = [...answersButtons, ...correctAnswersButtons, checkingButton, showingButton, retakingButton];
-
-// for (let i = 0; i < array.length; i++) {
-//     const element = array[i];
-//     element.addEventListener("click", press, false);
-// }
-
-// function press(e) {
-//     //console.log ("Button " + e.target.textContent +" is pressed");
-// }
-
 //add style to CorrectAnswerButtons
 function showCorrect() {
   for (let i = 0; i < correctAnswersButtons.length; i++) {
@@ -25,20 +13,23 @@ function showCorrect() {
   }
 }
 
-
 //add yellow colour, when answers are selected
 for (let i = 0; i < answersButtons.length; i++) {
   const el = answersButtons[i];
   el.addEventListener("click", select, false);
 }
 function select() {
-    if(this.classList.contains('selected')){
-        this.classList.remove("selected");
-    }else{
-        this.classList.add("selected");
+  if (this.classList.contains("selected")) {
+    this.classList.remove("selected");
+  } else {
+    // unselect other selected buttons if they exsist
+    let children = this.parentElement.children; //get children elements from parent of pressed button(other buttons)
+    for (let i = 0; i < children.length; i++) { 
+      children[i].classList.remove("selected");
     }
+    this.classList.add("selected");
+  }
 }
-
 
 //add fuctionality to button Cheking and calculate points
 checkingButton.addEventListener("click", () => {
@@ -52,10 +43,9 @@ checkingButton.addEventListener("click", () => {
   }
   showCorrect();
   showingPoints.innerHTML = "Points: " + points;
-//make the button Cheking inactive, after showing the result
+  //make the button Cheking inactive, after showing the result
   checkingButton.disabled = true;
 });
-
 
 //add fuctionality to button Retake
 retakingButton.addEventListener("click", () => {
@@ -63,8 +53,9 @@ retakingButton.addEventListener("click", () => {
     answersButtons[i].classList.remove("selected");
     answersButtons[i].classList.remove("show-correct");
   }
-  points = 0;
-  showingPoints.innerHTML = "Points: " + points;
 
+  points = 0;
+
+  showingPoints.innerHTML = "Points: " + points;
   checkingButton.disabled = false;
 });
