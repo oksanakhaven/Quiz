@@ -1,0 +1,18 @@
+.selected {
+    background-color: darkgoldenrod;
+}
+
+.show-correct {
+    background-color: forestgreen;
+}
+
+.show-wrong {
+    background-color: crimson;
+}
+
+/*this stile will make an element invisible */
+.hide-element {
+    display: none;
+}
+
+
